@@ -16,5 +16,51 @@ namespace Project02_EntityFrameworkDbFirstProduct
         {
             InitializeComponent();
         }
+
+
+        Db2Project20Entities db = new Db2Project20Entities();
+
+        void CategoryList()
+        {
+            var values = db.TblCategory.ToList();
+            dataGridView1.DataSource = values;
+        }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            CategoryList();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            TblCategory tblCategory = new TblCategory();
+            tblCategory.CategoryName = txtCategoryName.Text;
+            db.TblCategory.Add(tblCategory);
+            db.SaveChanges();
+            CategoryList();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtCategoryId.Text);
+            var value = db.TblCategory.Find(id);
+
+            db.TblCategory.Remove(value);
+            db.SaveChanges();
+
+            CategoryList();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            int id= Convert.ToInt32(txtCategoryId.Text);
+            var value = db.TblCategory.Find(id);
+
+            value.CategoryName = txtCategoryName.Text;
+
+            db.SaveChanges();
+
+            CategoryList();
+        }
     }
 }
